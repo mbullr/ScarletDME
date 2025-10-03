@@ -21,6 +21,7 @@
  * ScarletDME Wiki: https://scarlet.deltasoft.com
  * 
  * START-HISTORY (ScarletDME):
+ * 03Oct25 mab map_t1_id - map ~ to %T and . to %D (consistent with what dir_select in op_dio4.c)
  * 06Feb22 gwb Initialized a char array in read_record() in order to clear a warning
  *             reported by valgrind.  Reformatted code.
  * 
@@ -1336,15 +1337,15 @@ bool map_t1_id(char *id, int16_t id_len, char *mapped_id) {
 
   p = id;
   q = mapped_id;
-
+// 03Oct25 mab map_t1_id - map ~ to %T and . to %D (consistent with what dir_select in op_dio4.c)
   if (*p == '.') {
     *(q++) = '%';
-    *(q++) = 'd';
+    *(q++) = 'D';
     p++;
     id_len--;
   } else if (*p == '~') {
     *(q++) = '%';
-    *(q++) = 't';
+    *(q++) = 'T';
     p++;
     id_len--;
   }

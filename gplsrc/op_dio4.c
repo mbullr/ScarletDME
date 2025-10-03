@@ -21,6 +21,7 @@
  * ScarletDME Wiki: https://scarlet.deltasoft.com
  * 
  * START-HISTORY (ScarletDME):
+ * 03Oct25 mab in dir_select if we end up with an empty name, don't add to list
  * 28Feb20 gwb Changed integer declarations to be portable across address
  *             space sizes (32 vs 64 bit)
  *
@@ -1208,14 +1209,16 @@ Private bool dir_select(FILE_VAR* fvar, int16_t list_no) {
           }
           *q = '\0';
         }
+// 03Oct25 mab if we end up here with an empty name, don't add to list
+        if (strlen(name) > 0) {        
+          if (head == NULL)
+            ts_init(&head, 256);
+          else
+            ts_copy_byte(FIELD_MARK);
 
-        if (head == NULL)
-          ts_init(&head, 256);
-        else
-          ts_copy_byte(FIELD_MARK);
-
-        ts_copy_c_string(name);
-        record_count++;
+          ts_copy_c_string(name);
+          record_count++;
+		}
       }
     }
 
