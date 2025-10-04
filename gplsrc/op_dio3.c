@@ -1337,17 +1337,20 @@ bool map_t1_id(char *id, int16_t id_len, char *mapped_id) {
 
   p = id;
   q = mapped_id;
-// 03Oct25 mab map_t1_id - map ~ to %T and . to %D (consistent with what dir_select in op_dio4.c)
-  if (*p == '.') {
-    *(q++) = '%';
-    *(q++) = 'D';
-    p++;
-    id_len--;
-  } else if (*p == '~') {
-    *(q++) = '%';
-    *(q++) = 'T';
-    p++;
-    id_len--;
+// 03Oct25 mab  map ~ to %T and . to %D (consistent with what dir_select in op_dio4.c)
+//              but only went mapping to on
+  if (map_dir_ids){
+    if (*p == '.') {
+      *(q++) = '%';
+      *(q++) = 'D';
+      p++;
+      id_len--;
+    } else if (*p == '~') {
+      *(q++) = '%';
+      *(q++) = 'T';
+      p++;
+      id_len--;
+    }
   }
 
   while (id_len--) {
